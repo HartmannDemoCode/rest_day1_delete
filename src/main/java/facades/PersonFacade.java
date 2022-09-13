@@ -5,6 +5,7 @@ import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 
 //import errorhandling.PersonNotFoundException;
@@ -52,6 +53,23 @@ public class PersonFacade {
         }
         return new PersonDTO(personEntity);
     }
+    public PersonDTO update(PersonDTO personDTO){
+        EntityManager em = getEntityManager();
+        Person fromDB = em.find(Person.class, personDTO.getId());
+        if(fromDB == null)
+            throw new EntityNotFoundException("No such Person with id: "+personDTO.getId());
+
+        Person personEntity = new Person(personDTO.getId(), personDTO.getName(), personDTO.getAge());
+        try {
+            em.getTransaction().begin();
+            em.merge(personEntity);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new PersonDTO(personEntity);
+    }
+
     public PersonDTO getById(long id) { //throws PersonNotFoundException {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, id);
@@ -72,7 +90,8 @@ public class PersonFacade {
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade fe = getPersonFacade(emf);
-        fe.getAll().forEach(dto->System.out.println(dto));
+//        fe.getAll().forEach(dto->System.out.println(dto));
+        fe.update(new PersonDTO(4,"Henriette", 45));
     }
 
 }

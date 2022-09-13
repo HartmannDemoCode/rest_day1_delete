@@ -2,7 +2,9 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.PersonDTO;
 import dtos.RenameMeDTO;
+import entities.Person;
 import utils.EMF_Creator;
 import facades.PersonFacade;
 
@@ -48,12 +50,12 @@ public class PersonRessource {
     }
 
 
-//    @POST
-//    @Produces({MediaType.APPLICATION_JSON})
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    public Response postExample(String input){
-////        RenameMeDTO rmdto = GSON.fromJson(input, RenameMeDTO.class);
-////        System.out.println(rmdto);
-//        return Response.ok().entity().build();
-//    }
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response createPerson(String jsonInput){
+        PersonDTO person = GSON.fromJson(jsonInput, PersonDTO.class);
+        PersonDTO returned = FACADE.create(person);
+        return Response.ok().entity(GSON.toJson(returned)).build();
+    }
 }
