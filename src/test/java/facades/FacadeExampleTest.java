@@ -17,6 +17,7 @@ public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
     private static PersonFacade facade;
+    RenameMe rm, rm2;
 
     public FacadeExampleTest() {
     }
@@ -40,7 +41,8 @@ public class FacadeExampleTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new RenameMe("Some txt", "More text"));
+            RenameMe rm = new RenameMe("Some txt", "More text");
+            em.persist(rm);
             em.persist(new RenameMe("aaa", "bbb"));
 
             em.getTransaction().commit();

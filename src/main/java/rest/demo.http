@@ -1,11 +1,12 @@
-GET http://localhost:8080/devops_starter_war_exploded/api/xxx
-
+GET http://localhost:8080/devops_starter_war_exploded/api/person/400
+###
+GET http://localhost:8080/devops_starter_war_exploded/api/person
 ###
 POST http://localhost:8080/devops_starter_war_exploded/api/person
 Content-Type: application/json
 #User-Agent: Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion
 
-{"name": "First Property", "age": 9}
+{"name": "second", "age": 9}
 
 ###
 PUT http://localhost:8080/devops_starter_war_exploded/api/person/4
